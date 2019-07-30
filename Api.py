@@ -19,17 +19,18 @@ class Api:
     def get_data(self):
         """Make the API call and save the data"""
         answer = requests.get(BASE_URL, params=self.payload).json()['products']
-        i_int = 0
-        for i in answer:
-            if 'product_name' in i and 'nutrition_grades' in i \
-            and 'url' in i and 'stores_tags' in i and self.is_product_saved(i['product_name']):
-                self.name.append(i['product_name'])
-                self.nutri_score.append(i['nutrition_grades'])
-                self.url.append(i['url'])
+        current_int = 0
+        for current in answer:
+            if 'product_name' in current and 'nutrition_grades' in current \
+            and 'url' in current and 'stores_tags' in current \
+            and self.is_product_saved(current['product_name']):
+                self.name.append(current['product_name'])
+                self.nutri_score.append(current['nutrition_grades'])
+                self.url.append(current['url'])
                 self.stores.append([])
-                for current_store in range(len(i['stores_tags'])):
-                    self.stores[i_int].append(i['stores_tags'][current_store])
-                i_int += 1
+                for current_store in range(len(current['stores_tags'])):
+                    self.stores[current_int].append(current['stores_tags'][current_store])
+                current_int += 1
 
     def is_product_saved(self, check):
         """Check if the name is already saved
