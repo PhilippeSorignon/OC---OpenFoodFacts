@@ -1,6 +1,6 @@
 import requests
 
-BASE_URL = 'https://world.openfoodfacts.org/cgi/search.pl?'
+BASE_URL = 'https://world.openfoodfacts.org/cgi/search.pl'
 
 class Api:
     """Get and sort API data"""
@@ -12,14 +12,13 @@ class Api:
         self.nutri_score = []
         self.url = []
         self.stores = []
+        self.payload = {"action" : "process", "page_size" : "50", "tagtype_0" : "categories",\
+        "tag_contains_0" : "contains", "tag_0" : self.category, "tagtype_1" : "countries",\
+        "tag_contains_1" : "contains", "tag_1" : "France", "json": "1"}
 
     def get_data(self):
         """Make the API call and save the data"""
-        answer = requests.get(BASE_URL+
-                              'action=process&page_size=50&tagtype_0=categories&' \
-                              'tag_contains_0=contains&tag_0=' +self.category+
-                              '&tagtype_1=countries&tag_contains_1=contains&tag_1=France \
-                              &json=1').json()['products']
+        answer = requests.get(BASE_URL, params=self.payload).json()['products']
         i_int = 0
         for i in answer:
             if 'product_name' in i and 'nutrition_grades' in i \
