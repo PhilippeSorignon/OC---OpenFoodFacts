@@ -14,6 +14,26 @@ class Database:
         self.cusror_type = pymysql.cursors.DictCursor
         self.connection_instance = ""
 
+    def does_database_exists(self):
+        """Return if the database exists or not"""
+        connection_instance = pymysql.connect(host=self.database_server_ip, \
+        user=self.database_user_name, password=self.database_user_password, \
+        charset=self.char_set, cursorclass=self.cusror_type)
+
+        try:
+            cursor_instance = connection_instance.cursor()
+            sql_statement = "SHOW DATABASES"
+            cursor_instance.execute(sql_statement)
+            result = cursor_instance.fetchall()
+            return any(d['Database'] == self.database_name for d in result)
+
+
+
+        except Exception as e:
+            print("Exeception occured:{}".format(e))
+
+        finally:
+            connection_instance.close()
 
     def create_database(self):
         """Create the database"""
