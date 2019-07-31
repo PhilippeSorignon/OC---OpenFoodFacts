@@ -148,10 +148,7 @@ class Database:
             sql_statement = "SELECT * FROM Store WHERE name='"+store_name+"'"
             cursor_instance.execute(sql_statement)
             result = cursor_instance.fetchone()
-            if result is None:
-                return False
-            else:
-                return True
+            return not result is None
 
         except Exception as e:
             print("Exeception occured:{}".format(e))
