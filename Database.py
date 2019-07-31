@@ -52,7 +52,8 @@ class Database:
             cursor_instance = self.connection_instance.cursor()
             sql_statement = "CREATE TABLE IF NOT EXISTS\
              Product(id int PRIMARY KEY AUTO_INCREMENT, \
-             name varchar(255), nutri_score char, url varchar(255), saved bool)"
+             name varchar(255), category varchar(255), \
+             nutri_score char, url varchar(255), saved bool)"
             cursor_instance.execute(sql_statement)
 
             sql_statement = "CREATE TABLE IF NOT EXISTS \
@@ -67,12 +68,12 @@ class Database:
             print("Exeception occured:{}".format(e))
 
 
-    def save_product(self, name, nutri_score, url, stores):
+    def save_product(self, name, category, nutri_score, url, stores):
         """Save a product in the database"""
         try:
             cursor_instance = self.connection_instance.cursor()
-            sql_statement = "INSERT INTO Product (name, nutri_score, url, saved)\
-             VALUES ('"+name+"', '"+nutri_score+"', '"+url+"', '0')"
+            sql_statement = "INSERT INTO Product (name, category, nutri_score, url, saved)\
+             VALUES ('"+name+"', '"+category+"', '"+nutri_score+"', '"+url+"', '0')"
             cursor_instance.execute(sql_statement)
 
             for current_store in range(len(stores)):
