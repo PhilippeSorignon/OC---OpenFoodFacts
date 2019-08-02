@@ -131,9 +131,25 @@ class Database:
 
     def get_products(self, cat):
         """Return a dictionnary of all the products of a certain category saved in the database"""
+        result = {}
         try:
             cursor_instance = self.connection_instance.cursor()
-            sql_statement = "SELECT * FROM Product WHERE category="+cat
+            sql_statement = "SELECT * FROM Product WHERE category='"+cat+"'"
+            cursor_instance.execute(sql_statement)
+            result = cursor_instance.fetchall()
+
+        except Exception as e:
+            print("Exeception occured:{}".format(e))
+
+        return result
+
+
+    def replace_product(self, cat):
+        """Return all the product of a given category where the nutri-score is a"""
+        result = {}
+        try:
+            cursor_instance = self.connection_instance.cursor()
+            sql_statement = "SELECT * FROM Product WHERE category='"+cat+"' AND nutri_score='a'"
             cursor_instance.execute(sql_statement)
             result = cursor_instance.fetchall()
 
