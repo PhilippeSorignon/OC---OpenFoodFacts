@@ -129,16 +129,18 @@ class Database:
             print("Exeception occured:{}".format(e))
 
 
-    def get_products(self):
-        """Return a dictionnary of all the products saved in the database"""
+    def get_products(self, cat):
+        """Return a dictionnary of all the products of a certain category saved in the database"""
         try:
             cursor_instance = self.connection_instance.cursor()
-            sql_statement = "SELECT * FROM Product"
+            sql_statement = "SELECT * FROM Product WHERE category="+cat
             cursor_instance.execute(sql_statement)
             result = cursor_instance.fetchall()
 
         except Exception as e:
             print("Exeception occured:{}".format(e))
+
+        return result
 
 
     def does_store_exists(self, store_name):
