@@ -146,15 +146,19 @@ class Database:
 
     def replace_product(self, cat):
         """Return all the product of a given category where the nutri-score is a"""
-        result = {}
-        try:
-            cursor_instance = self.connection_instance.cursor()
-            sql_statement = "SELECT * FROM Product WHERE category='"+cat+"' AND nutri_score='a'"
-            cursor_instance.execute(sql_statement)
-            result = cursor_instance.fetchall()
+        score_list = ['a', 'b', 'c', 'd']
+        result = ()
+        current_score = 0
+        while result == ():
+            try:
+                cursor_instance = self.connection_instance.cursor()
+                sql_statement = "SELECT * FROM Product WHERE category='"+cat+"' AND nutri_score='"+score_list[current_score]+"'"
+                cursor_instance.execute(sql_statement)
+                current_score += 1
+                result = cursor_instance.fetchall()
 
-        except Exception as e:
-            print("Exeception occured:{}".format(e))
+            except Exception as e:
+                print("Exeception occured:{}".format(e))
 
         return result
 
