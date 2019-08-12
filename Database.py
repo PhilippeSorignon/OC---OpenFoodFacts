@@ -144,6 +144,65 @@ class Database:
         return result
 
 
+    def get_saved_products(self):
+        """Return a dictionnary of all the saved products"""
+        result = {}
+        try:
+            cursor_instance = self.connection_instance.cursor()
+            sql_statement = "SELECT * FROM Product WHERE saved='1'"
+            cursor_instance.execute(sql_statement)
+            result = cursor_instance.fetchall()
+
+        except Exception as e:
+            print("Exeception occured:{}".format(e))
+
+        return result
+
+
+    def get_product_data(self, name):
+        """Return a dictionnary of all the products of a certain category saved in the database"""
+        result = {}
+        try:
+            cursor_instance = self.connection_instance.cursor()
+            sql_statement = "SELECT * FROM Product WHERE name='"+name+"'"
+            cursor_instance.execute(sql_statement)
+            result = cursor_instance.fetchone()
+
+        except Exception as e:
+            print("Exeception occured:{}".format(e))
+
+        return result
+
+
+    def get_stores(self, id_product):
+        """Return a dictionnary of all the stores associated to a product"""
+        result = {}
+        try:
+            cursor_instance = self.connection_instance.cursor()
+            sql_statement = "SELECT * FROM AssociationProductStore WHERE product='"+id_product+"'"
+            cursor_instance.execute(sql_statement)
+            result = cursor_instance.fetchall()
+
+        except Exception as e:
+            print("Exeception occured:{}".format(e))
+
+        return result
+
+
+    def product_saved(self, id_product, save):
+        """Set a product to saved or not saved"""
+        try:
+            cursor_instance = self.connection_instance.cursor()
+            if save:
+                sql_statement = "UPDATE Product SET saved='1' WHERE id='"+id_product+"'"
+            else:
+                sql_statement = "UPDATE Product SET saved='0' WHERE id='"+id_product+"'"
+            cursor_instance.execute(sql_statement)
+
+        except Exception as e:
+            print("Exeception occured:{}".format(e))
+
+
     def replace_product(self, cat):
         """Return all the product of a given category where the nutri-score is a"""
         score_list = ['a', 'b', 'c', 'd']
@@ -187,7 +246,6 @@ class Database:
             return result['id']
 
         except Exception as e:
-            print('get product id')
             print("Exeception occured:{}".format(e))
 
 
@@ -202,5 +260,17 @@ class Database:
             return result['id']
 
         except Exception as e:
-            print('get store id')
+            print("Exeception occured:{}".format(e))
+
+    def get_store_name(self, store_id):
+        """Return the store name"""
+        try:
+            cursor_instance = self.connection_instance.cursor()
+            sql_statement = "SELECT name FROM Store WHERE id='"+store_id+"'"
+            cursor_instance.execute(sql_statement)
+            result = cursor_instance.fetchone()
+
+            return result['name']
+
+        except Exception as e:
             print("Exeception occured:{}".format(e))
