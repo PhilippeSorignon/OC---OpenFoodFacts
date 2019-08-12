@@ -1,14 +1,11 @@
 # Utilisez les données publiques de l'OpenFoodFacts
 
-## Table of content
-- First screen
-  - Configure database
-    - Copy data from OpenFoodFacts
-    - Save data to the database
-  - Replace or display
-    - Replace food
-      - Check database
-    - Display substituted food
+## settings.py
+The user has to create a "settings.py" file with his MySQL credentials
+
+USER_NAME = ''
+PASSWORD = ''
+
 
 
 ## First screen
